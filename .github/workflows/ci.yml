@@ -1,0 +1,44 @@
+name: LLM Wiki Toolkit CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Asset Quality & Security Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate Bash Script Syntax
+        run: |
+          bash -n scripts/create-wiki.sh
+
+      - name: Verify Python Scripts Compile
+        run: |
+          python -m py_compile scripts/wiki-lint.py scripts/wiki-search.py scripts/validate-assets.py
+
+      - name: Validate Skills, Agents, Prompts & Presets (Quality & Security)
+        run: |
+          python scripts/validate-assets.py
+
+      - name: End-to-End Wiki Scaffold & Lint Test
+        run: |
+          chmod +x scripts/create-wiki.sh
+          ./scripts/create-wiki.sh -o /tmp/test_llm_wiki -p llm-wiki
+          ./scripts/create-wiki.sh -o /tmp/test_second_brain -p second-brain
+          ./scripts/create-wiki.sh -o /tmp/test_company_brain -p company-brain
+          python scripts/wiki-lint.py --wiki /tmp/test_llm_wiki/wiki
+          python scripts/wiki-lint.py --wiki /tmp/test_second_brain/wiki
+          python scripts/wiki-lint.py --wiki /tmp/test_company_brain/wiki
