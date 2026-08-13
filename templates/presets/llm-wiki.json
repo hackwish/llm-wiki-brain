@@ -1,0 +1,10 @@
+{
+  "title": "LLM Wiki (Pure)",
+  "purpose": "A pure, compounding knowledge base built from raw sources — Karpathy's pattern without personal PKM folders.",
+  "preset": "llm-wiki",
+  "kit": "llm-wiki",
+  "lang": "en",
+  "owner": "",
+  "topic": "",
+  "domains": ["topics", "people", "learnings"]
+}

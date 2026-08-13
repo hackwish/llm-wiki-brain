@@ -1,0 +1,24 @@
+# Obsidian vault
+.obsidian/
+.trash/
+.smart-env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Node (if skills are published as npm packages)
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Scratch
+*.tmp

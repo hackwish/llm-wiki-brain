@@ -1,0 +1,9 @@
+{
+  "title": "General Knowledge Wiki",
+  "purpose": "A persistent, compounding knowledge base maintained by an LLM.",
+  "preset": "general",
+  "lang": "en",
+  "owner": "",
+  "topic": "",
+  "domains": ["topics", "people", "projects", "learnings"]
+}

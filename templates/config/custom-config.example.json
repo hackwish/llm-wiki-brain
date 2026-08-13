@@ -1,0 +1,10 @@
+{
+  "$comment": "Custom config — overrides presets. Copy this file and adapt it. Any field may be omitted to fall back to defaults.",
+  "title": "Japan Spring 2026 Trip Planning",
+  "purpose": "Planning and knowledge base for a two-week trip to Japan in spring 2026.",
+  "preset": "custom",
+  "lang": "en",
+  "owner": "human:hackwish",
+  "topic": "destinations, logistics, culture, budget",
+  "domains": ["destinations", "logistics", "culture", "budget"]
+}

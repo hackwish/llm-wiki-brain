@@ -1,0 +1,9 @@
+{
+  "title": "Research Wiki",
+  "purpose": "A deep-dive knowledge base on a research topic, compounding papers, findings, and an evolving thesis.",
+  "preset": "research",
+  "lang": "en",
+  "owner": "",
+  "topic": "",
+  "domains": ["literature", "theory", "applications"]
+}

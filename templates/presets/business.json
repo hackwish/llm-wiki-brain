@@ -1,0 +1,9 @@
+{
+  "title": "Business / Team Wiki",
+  "purpose": "An internal knowledge base fed by team sources, meeting transcripts, project documents, and customer calls.",
+  "preset": "business",
+  "lang": "en",
+  "owner": "",
+  "topic": "",
+  "domains": ["customers", "market", "projects", "team"]
+}

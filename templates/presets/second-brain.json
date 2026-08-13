@@ -1,0 +1,10 @@
+{
+  "title": "Second Brain",
+  "purpose": "A personal knowledge management system focused on CODE (Capture, Organize, Distill, Express) and PARA actionability.",
+  "preset": "second-brain",
+  "kit": "second-brain",
+  "lang": "en",
+  "owner": "",
+  "topic": "",
+  "domains": ["notes", "summaries"]
+}

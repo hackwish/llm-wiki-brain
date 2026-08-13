@@ -1,0 +1,9 @@
+{
+  "title": "Reading Companion Wiki",
+  "purpose": "A companion wiki for reading a book, tracking characters, worldbuilding, themes, and how they connect.",
+  "preset": "book",
+  "lang": "en",
+  "owner": "",
+  "topic": "",
+  "domains": ["characters", "world", "themes"]
+}

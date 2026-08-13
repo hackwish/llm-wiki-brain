@@ -1,0 +1,10 @@
+{
+  "title": "Company Brain",
+  "purpose": "A governed, current source of how the business works — definitions, rules, decisions, and tribal knowledge — captured once and readable by people and AI agents.",
+  "preset": "company-brain",
+  "kit": "company-brain",
+  "lang": "en",
+  "owner": "",
+  "topic": "",
+  "domains": ["definitions", "rules", "decisions", "processes"]
+}

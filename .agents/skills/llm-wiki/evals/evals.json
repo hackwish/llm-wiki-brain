@@ -1,0 +1,17 @@
+[
+  {
+    "name": "ingest-source-into-wiki",
+    "input": "Ingesta este artículo de raw/ y actualiza la wiki: resumen, páginas de conceptos, correlación con wikilinks y tags, index y log.",
+    "expected": ["source page", "entity/concept updates", "wikilinks + tags correlation", "index update", "log entry"]
+  },
+  {
+    "name": "answer-from-wiki-and-save-insight",
+    "input": "Responde mi pregunta usando la wiki y guarda cualquier insight útil como página de síntesis.",
+    "expected": ["answer based on wiki with citations", "synthesis page filed", "index and log updated"]
+  },
+  {
+    "name": "scaffold-new-wiki",
+    "input": "Crea un nuevo wiki de investigación en ../mi-wiki.",
+    "expected": ["raw/ + wiki/ bundle", "PARA folders", "AGENTS.md schema", "index.md + log.md"]
+  }
+]

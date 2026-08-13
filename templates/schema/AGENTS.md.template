@@ -1,0 +1,137 @@
+# {{TITLE}}
+
+{{PURPOSE}}
+
+{{TOPIC}}
+
+This is an **LLM Wiki** schema file. It tells the agent how this knowledge base is
+structured, what conventions to follow, and what workflows to run when ingesting
+sources, answering questions, and maintaining the wiki. {{KIT_INTRO}}
+Regardless of preset, agent search and question answering within this wiki operate as a closed-world **RAG (Retrieval-Augmented Generation)** knowledge base: all queries are strictly based on the indexed information in `wiki/` guided by this `AGENTS.md` file. External/web searches are permitted **only** when explicitly requested by the user.
+
+- Owner: {{OWNER}}
+- Language: {{LANG}}
+- Preset: {{PRESET}}
+- Kit: {{KIT}}
+- Bundle format: OKF v0.2
+
+---
+
+## The three layers
+
+{{KIT_LAYERS}}
+
+The primary front-end is **Obsidian** (or similar tools: Logseq, Anytype, VS Code).
+Obsidian is the IDE for browsing the graph; the agent is the writer.
+
+## Structure
+
+```text
+{{KIT_STRUCTURE}}
+```
+
+## Domains
+
+{{DOMAINS}}
+
+## Frontmatter (OKF v0.2)
+
+Every page carries YAML frontmatter. Required:
+
+```yaml
+---
+type: entity | concept | source | synthesis | overview | index | log | attestation
+title: "Human-readable title"
+description: "One-sentence summary"
+domain: <domain-slug> | cross-domain
+tags: [topic-a, topic-b]
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+okf_version: "0.2"
+---
+```
+
+Recommended (provenance + trust):
+
+```yaml
+sources:                  # what this page derives from
+  - id: <source-path>
+    title: "Source title"
+    author: "author"
+generated:
+  by: <agent-name>/<version>   # e.g. reference_agent/gemini-2.5-pro
+  at: YYYY-MM-DDTHH:MM:SSZ
+verified:                 # absent → unverified
+  - by: human:<id> | process:<id> | <agent>/<version>
+    at: YYYY-MM-DDTHH:MM:SSZ
+status: draft | machine-confirmed | human-reviewed | stale
+usage_window: { from: YYYY-MM-DD, to: YYYY-MM-DD }
+```
+
+**Trust tiers (OKF):**
+- No `verified` key ⇒ **unverified**
+- `verified` only by non-`human:` actors ⇒ **machine-confirmed**
+- `verified` by a `human:<id>` actor ⇒ **human-reviewed**
+
+## Page types and naming
+
+| Type | Location | Naming |
+|------|----------|--------|
+| source | `wiki/sources/` | `YYYY-MM-DD-<slug>.md` |
+| entity | `wiki/entities/` or domain folder | `<slug>.md` |
+| concept | `wiki/concepts/` or domain folder | `<slug>.md` |
+| synthesis | `wiki/synthesis/` | `<slug>.md` |
+| overview | domain folder | `_overview.md` |
+
+Every page must have outbound `[[wikilinks]]` (except `log.md`). Prefer updating
+existing pages over creating duplicates.
+
+{{KIT_EXTRA_MODE}}
+
+## Operations
+
+### Ingest
+1. Read the source in `raw/` (or `Clippings/` / `Agent Client/` if present) completely (images noted for separate viewing).
+2. Summarize 3–5 key takeaways and align emphasis with the user.
+3. Create `wiki/sources/YYYY-MM-DD-<slug>.md` with full frontmatter.
+4. Update or create entity/concept pages (5–15 typical). Flag contradictions in
+   `## Contradictions & Open Questions` — never silently overwrite.
+5. **Correlate everything touched in this ingest**: every updated/created page must
+   reference the related pages via `[[wikilinks]]` and shared `tags`. Nothing may be
+   left isolated.
+6. Update `wiki/index.md` and append `wiki/log.md`.
+
+### Query
+1. **RAG Boundary**: Search and synthesize strictly from indexed `wiki/` pages guided by `AGENTS.md`. Never perform web/external searches unless explicitly requested by the user.
+2. Read `wiki/index.md`, locate pages, read them (not raw alone).
+3. Synthesize with `[[wikilink]]` citations.
+4. Surface flagged contradictions. If the wiki lacks coverage, state the gap clearly; ask the user before searching externally.
+5. Durable answers (comparisons, analyses, connections) are filed back to
+   `wiki/synthesis/` as new pages — Express layer, nothing disappears into chat.
+
+### Lint
+Periodically (every 5–10 ingests or when answers get noisy):
+- Contradictions, stale claims, orphan pages, missing cross-refs, index gaps.
+- OKF freshness and trust tiers (`status: stale`, missing `verified`).
+- Report severity: `contradiction > stale > orphan > gap`, then offer to fix.
+
+{{KIT_SB_OPS}}
+
+## index.md and log.md
+
+- **index.md** is content-oriented: every page listed with link + one-line summary,
+  grouped by category. Update on every ingest.
+- **log.md** is chronological and append-only. Entries start with
+  `## [YYYY-MM-DD] <op> | <Title>` so they stay parseable with
+  `grep "^## \[" wiki/log.md | tail -5`.
+
+## Rules
+
+- **RAG constraint**: All agent searches and answers within the vault/wiki are strictly based on indexed information in `wiki/` guided by `AGENTS.md`. External/web searches are strictly prohibited unless explicitly requested by the user.
+- Never modify anything in `raw/`, `Clippings/`, or `Agent Client/`.
+- Every new page needs full YAML frontmatter.
+- Every page needs outbound `[[wikilinks]]`; every ingest correlates its touched
+  pages via wikilinks and tags.
+- Flag contradictions explicitly; never silently overwrite.
+- Answers and insights compound: file them back into `wiki/`.
+- Co-evolve this schema as conventions mature.
