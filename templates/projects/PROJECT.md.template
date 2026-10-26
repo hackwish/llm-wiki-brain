@@ -1,0 +1,42 @@
+---
+type: project
+title: "Project name"
+description: "What this project is for."
+domain: projects
+tags: [project]
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+okf_version: "0.2"
+project_id: project-id
+status: planning
+repository: "../path-or-repository-url"
+specification_system: none
+specification_path: ""
+---
+
+## Objective
+
+State the outcome this project is intended to achieve.
+
+## Current Context
+
+Summarize relevant background, constraints, and current state. Link to durable
+knowledge in the wiki instead of copying it here.
+
+## Next Actions
+
+- [ ] Describe the next concrete action.
+
+## Specification And Delivery
+
+Specification work is optional. If this repository uses an existing
+specification system, record its name and location above. Otherwise, significant
+initiatives may use `docs/specs/<initiative-id>/` in the code repository.
+
+| Initiative | Status | Specification | Plan / tasks |
+|------------|--------|---------------|--------------|
+| initiative-id | proposed | `docs/specs/initiative-id/spec.md` | `docs/specs/initiative-id/plan.md` |
+
+## Related Wiki Pages
+
+- [[Related concept or entity]]

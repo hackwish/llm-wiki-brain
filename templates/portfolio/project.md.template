@@ -1,0 +1,33 @@
+---
+type: project
+title: "Project title"
+description: "A concise description of the work and its value."
+domain: projects
+tags: [portfolio, project]
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+okf_version: "0.2"
+portfolio: false
+visibility: private
+status: draft
+featured: false
+role: "Your role"
+period: "YYYY-MM to YYYY-MM"
+skills: [skill-one, skill-two]
+---
+
+## Context
+
+Describe the situation and the problem to solve.
+
+## Approach
+
+Explain your contribution, key decisions, and tools used.
+
+## Outcome
+
+Record measurable results and what you learned.
+
+## Evidence
+
+Link only to material that is safe and authorized to publish.
