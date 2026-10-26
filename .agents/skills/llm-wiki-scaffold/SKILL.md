@@ -31,14 +31,14 @@ The toolkit supports four distinct toolkit modes (`kit`):
 |-----------------|---------|-------------------|--------------|
 | **`blended`** (default) | `general`, `research`, `book`, `business` | `raw/` + `wiki/` + PARA (`projects/`, `areas/`, `resources/`, `archive/`) | Full combo: OKF + Second Brain (CODE+PARA) |
 | **`llm-wiki`** (pure) | `llm-wiki` | `raw/` + `wiki/` | Pure Karpathy pattern: raw sources + compounding wiki (no PARA) |
-| **`second-brain`** (pure PKM) | `second-brain` | `raw/` + `wiki/` + PARA | PKM methodology: CODE + PARA + reviews |
+| **`second-brain`** (pure PKM) | `second-brain`, `portfolio` | `raw/` + `wiki/` + PARA | PKM methodology: CODE + PARA + reviews; portfolio adds curated static publication |
 | **`company-brain`** (pure org) | `company-brain` | `raw/` + `wiki/` + `wiki/lineage.md` | Governed business knowledge: definitions, rules, decisions, processes, tribal knowledge |
 
 ## Quick start
 
 1. **Clarify intent** (skip if already clear):
    - Topic or title
-   - Preset: `general` | `llm-wiki` | `second-brain` | `company-brain` | `research` | `book` | `business`
+  - Preset: `general` | `llm-wiki` | `second-brain` | `company-brain` | `research` | `book` | `business` | `portfolio`
    - Output path
 
 2. **Scaffold with the script** (preferred):
@@ -84,6 +84,7 @@ If the user gives only a free-text topic, propose 2–4 domains before scaffoldi
 | Business / team | `business` (blended) | customers, market, projects, team |
 | Company brain | `company-brain` | definitions, rules, decisions, processes |
 | Second brain / PKM | `second-brain` | notes, summaries |
+| Professional portfolio | `portfolio` | projects, skills, experience, learning |
 | General purpose | `general` (blended) | topics, people, projects, learnings |
 
 Confirm domains with the user, then use a close preset or a custom config.
@@ -96,6 +97,12 @@ Tell the user:
 2. Drop sources into `raw/` (or root `Clippings/` / `Agent Client/` if used) — the primary front-end is Obsidian or a similar markdown tool.
 3. Use the **ingest**, **query**, **lint**, **second brain**, or **company brain** workflows (sibling skills).
 4. Co-evolve the wiki's `AGENTS.md` as conventions mature.
+
+For the `portfolio` preset, project files remain private unless their frontmatter
+sets `portfolio: true`, `visibility: public`, and `status: published`. Run
+`python3 scripts/portfolio-export.py --root <wiki-root> --output public` from the
+toolkit repository to generate a single static `index.html` from approved entries.
+Review case-study content and evidence before publication.
 
 ## Customization pass (optional)
 

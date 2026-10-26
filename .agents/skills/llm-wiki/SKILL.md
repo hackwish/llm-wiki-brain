@@ -34,9 +34,14 @@ Use this skill (or the sub-skill it points to) when the user wants to:
 - health-check, audit, or maintain quality (→ `llm-wiki-lint`)
 - run Second Brain workflows: capture, organize (PARA), distill, express (→ `second-brain-ops`)
 - manage a company brain: definitions, rules, decisions, tribal knowledge (→ `company-brain`)
+- register and track an existing codebase as a Second Brain project (→ `second-brain-ops`)
+- specify or plan a significant change in an existing codebase (→ opt-in `spec-driven-development`)
+- prepare approved project cases for a portfolio export (→ `scripts/portfolio-export.py`)
 
 Trigger phrases: "llm wiki", "knowledge base", "persistent wiki", "second brain",
 "ingest this", "health-check the wiki", "guardar este insight en la wiki".
+For project workflows, phrases include "track this repository", "write a spec",
+"plan this change", and "publish this project to my portfolio".
 
 ## Three layers
 
@@ -62,6 +67,15 @@ Obsidian is the IDE; the agent is the writer; the wiki is the codebase.
 | Express | `llm-wiki-query` / `second-brain-ops` | synthesis pages, Intermediate Packets |
 | Lint / Review | `llm-wiki-lint` | contradiction/stale/orphan/gap report, weekly review |
 | Company Brain | `company-brain` | governed definitions/rules/decisions/tribal, serve + trace |
+| Project registry | `second-brain-ops` | project note at `projects/<project-id>/PROJECT.md` |
+| Project specification | `spec-driven-development` | opt-in, approved specification and plan for an existing codebase |
+| Portfolio export | `scripts/portfolio-export.py` | static page from explicitly approved project notes |
+
+Project SDD is optional and does not scaffold applications or choose frameworks.
+Keep initiative artifacts with the codebase, use its existing specification
+system when present, and retain human approval gates. Portfolio publication is a
+separate, explicit opt-in; never treat a project registry entry as public by
+default.
 
 ## Shared OKF conventions
 

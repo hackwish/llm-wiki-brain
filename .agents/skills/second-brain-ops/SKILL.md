@@ -38,11 +38,32 @@ or similar markdown tools.
     concepts/          # topics and ideas
     synthesis/         # EXPRESS — filed answers and Intermediate Packets
     <domain>/          # domain folders
-  projects/            # PARA — short-term efforts with goals
+  projects/            # PARA — project registry and short-term efforts
+    <project-id>/
+      PROJECT.md       # project context, repository link, status, and initiatives
   areas/               # PARA — long-term responsibilities
   resources/           # PARA — topics that may be useful later
   archive/             # PARA — inactive items
 ```
+
+## Project Registry And Delivery
+
+For an existing code repository, keep one tracking note at
+`projects/<project-id>/PROJECT.md`, starting from
+[`templates/projects/PROJECT.md.template`](../../../templates/projects/PROJECT.md.template).
+Record its objective, current status, repository path or URL, useful context,
+next action, and links to related wiki pages. This is a private PARA tracking
+note, not a portfolio case.
+
+Specification work is optional. Keep initiative specifications, plans, tasks,
+and verification evidence in the code repository. Respect an existing
+specification system and its artifact locations; otherwise use
+`docs/specs/<initiative-id>/`. The project note should link to those artifacts,
+not copy their contents. Follow the human approval gates in
+`spec-driven-development` before advancing to implementation.
+
+Update the project status and next action during weekly reviews. Archive a
+completed or inactive project using the existing PARA review process.
 
 ## CODE methodology
 
