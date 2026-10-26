@@ -49,6 +49,18 @@ las 4 carpetas PARA (projects, areas, resources, archive) queden listas. Explica
 cómo capture, organice, destile y exprese usando esta estructura.
 ```
 
+## Portfolio with selective publication
+
+```bash
+./scripts/create-wiki.sh -o ../mi-portfolio --preset portfolio --title "Mi portfolio"
+python3 scripts/portfolio-export.py --root ../mi-portfolio --output public
+```
+
+Registra cada caso en `projects/` desde `PROJECT-TEMPLATE.md`. Manténlo privado
+hasta revisar texto, enlaces y evidencias; solo se exportan notas con
+`portfolio: true`, `visibility: public` y `status: published`. El resultado es
+un `public/index.html` estático que puedes alojar con cualquier hosting estático.
+
 ## After scaffolding (verify)
 
 ```

@@ -12,12 +12,15 @@ scripts + templates). Adjust paths and details to your situation.
 | [lint.md](lint.md) | Health-check and repair the wiki | `llm-wiki-lint` |
 | [second-brain.md](second-brain.md) | CODE + PARA capture/organize/distill/express | `second-brain-ops` |
 | [company-brain.md](company-brain.md) | Governed business knowledge | `company-brain` |
+| [project-sdd.md](project-sdd.md) | Specify and plan a significant change in an existing repository | `spec-driven-development` |
 
 ## Tips
 
 - The agent loads the matching skill automatically from phrases like "ingesta
   este", "health-check the wiki", "create a wiki".
 - Tell the agent which **preset** (`general | llm-wiki | second-brain | company-brain | research | book | business`) or custom config to use when scaffolding.
-- After any operation the agent must update `wiki/index.md` and append
-  `wiki/log.md`; verify it did.
+- Use the SDD prompt only for an existing code repository; preserve its specification system and approve each phase before proceeding.
+- After a wiki ingest or synthesis operation, the agent must update
+  `wiki/index.md` and append `wiki/log.md`; verify it did. SDD and portfolio
+  operations do not require wiki log updates unless they also modify the wiki.
 - Use `scripts/wiki-lint.py` before/after big changes and offer to fix findings.

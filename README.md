@@ -9,7 +9,7 @@ Four toolkit modes:
 | Toolkit Mode (`kit`) | Presets | Created Folders | Focus & Schema |
 |----------------------|---------|-----------------|----------------|
 | **`llm-wiki`** (pure) | `llm-wiki` | `raw/` + `wiki/` | Pure Karpathy pattern: raw sources + compounding knowledge graph (no PARA) |
-| **`second-brain`** (pure PKM) | `second-brain` | `raw/` + `wiki/` + PARA | PKM methodology: CODE + PARA actionability (`projects/`, `areas/`, `resources/`, `archive/`) + reviews |
+| **`second-brain`** (pure PKM) | `second-brain`, `portfolio` | `raw/` + `wiki/` + PARA | PKM methodology: CODE + PARA actionability (`projects/`, `areas/`, `resources/`, `archive/`) + reviews; portfolio adds curated publication |
 | **`company-brain`** (pure org) | `company-brain` | `raw/` + `wiki/` + `wiki/lineage.md` | Governed organizational knowledge: definitions, rules, decisions, processes, tribal knowledge |
 | **`blended`** (default) | `general`, `research`, `book`, `business` | `raw/` + `wiki/` + PARA | Combined OKF knowledge bundle + PARA actionability folders |
 
@@ -67,7 +67,7 @@ python3 scripts/wiki-lint.py --wiki ../my-wiki/wiki -v
 python3 scripts/wiki-search.py "your topic" --wiki ../my-wiki/wiki
 ```
 
-## Presets (`blended` kit)
+## Presets (`blended` y `second-brain` kits)
 
 Los presets `general`, `research`, `book` y `business` comparten el modo combinado (`blended` kit: OKF `raw/` + `wiki/` más carpetas PARA). Se diferencian en su enfoque y en los dominios (`wiki/<domain>/`) que estructuran:
 
@@ -77,6 +77,41 @@ Los presets `general`, `research`, `book` y `business` comparten el modo combina
 | **`research`** | Análisis de literatura académica, teoría y experimentos | `literature`, `theory`, `applications` |
 | **`book`** | Acompañante de lectura, ficción, análisis narrativo y lore | `characters`, `world`, `themes` |
 | **`business`** | Información de clientes, mercado, entregables y equipo | `customers`, `market`, `projects`, `team` |
+| **`portfolio`** | Registro privado de proyectos y experiencias con publicación selectiva | `projects`, `skills`, `experience`, `learning` |
+
+## Portfolio y publicación
+
+El preset `portfolio` crea un Second Brain privado y añade `projects/PROJECT-TEMPLATE.md`.
+Los casos no se publican salvo que cada archivo de proyecto declare explícitamente
+`portfolio: true`, `visibility: public` y `status: published` en su frontmatter.
+
+Desde este repositorio, genera una página HTML estática de una sola pieza:
+
+```bash
+./scripts/create-wiki.sh -o ../mi-portfolio --preset portfolio --title "Mi portfolio"
+python3 scripts/portfolio-export.py --root ../mi-portfolio --output public
+```
+
+El exportador solo lee archivos Markdown directamente dentro de `projects/` y escribe
+`public/index.html`; no lee ni publica `raw/`, `wiki/` u otras carpetas. Revisa el texto,
+enlaces y evidencias antes de marcar un caso como público. Ejecutar la exportación de
+nuevo reemplaza el archivo generado para retirar casos que ya no estén aprobados.
+
+## Gestión de proyectos existentes y SDD
+
+En un Second Brain, registra cada repositorio existente en
+`projects/<project-id>/PROJECT.md` usando
+[`templates/projects/PROJECT.md.template`](templates/projects/PROJECT.md.template).
+La ficha sirve para contexto y seguimiento; no es un caso de portfolio y no se
+publica por defecto.
+
+Spec-Driven Development (SDD) es una ruta optativa para cambios significativos en
+esos repositorios. Conserva el sistema de especificación ya usado por el repo; si
+no existe, guarda cada iniciativa en `docs/specs/<initiative-id>/`. Las specs,
+planes, tareas y evidencias permanecen junto al código. La skill
+[`spec-driven-development`](.agents/skills/spec-driven-development/SKILL.md)
+gestiona las fases y aprobaciones humanas, pero no genera aplicaciones ni elige
+frameworks. Para iniciar, consulta [`prompts/project-sdd.md`](prompts/project-sdd.md).
 
 ## Uso diario: Generador vs Carpeta Core
 
@@ -104,6 +139,9 @@ Este repositorio puede ser utilizado de dos formas principales según tu flujo d
 | **Lint** | Contradictions, stale, orphans, gaps, OKF tiers | `llm-wiki-lint` |
 | **Review** | Weekly / monthly Second Brain reviews | `second-brain-ops` |
 | **Company brain** | Governed definitions/rules/decisions/tribal; capture → govern → serve → trace | `company-brain` |
+| **Project registry** | Track an existing repository from a private PARA project note | `second-brain-ops` |
+| **Project SDD** | Optional, human-gated specification and plan for an existing repository | `spec-driven-development` |
+| **Portfolio export** | Publish only explicitly approved project notes to static HTML | `scripts/portfolio-export.py` |
 
 ## OKF ↔ LLM Wiki ↔ CODE/PARA mapping
 
@@ -132,16 +170,20 @@ Este repositorio puede ser utilizado de dos formas principales según tu flujo d
 ├── scripts/
 │   ├── create-wiki.sh        scaffold a wiki / second brain / company brain
 │   ├── wiki-lint.py          OKF health-check
-│   └── wiki-search.py        full-text search over wiki/
+│   ├── wiki-search.py        full-text search over wiki/
+│   ├── portfolio-export.py   explicitly approved static portfolio export
+│   └── sdd-lint.py           optional SDD requirement/task traceability check
 └── templates/
     ├── schema/AGENTS.md.template
     ├── config/custom-config.example.json
-    └── presets/              general, llm-wiki, second-brain, company-brain, research, book, business
+  ├── projects/             private PARA project registry note
+  ├── sdd/                  optional spec, plan, tasks, and capability map templates
+  └── presets/              general, llm-wiki, second-brain, company-brain, research, book, business, portfolio
 ```
 
 ## Skills
 
-See [`.agents/README.md`](.agents/README.md) for the skill library index. The skills are the agent-facing workflows: `llm-wiki` (coordinator), `llm-wiki-scaffold`, `llm-wiki-ingest`, `llm-wiki-query`, `llm-wiki-lint`, `second-brain-ops`, `company-brain`.
+See [`.agents/README.md`](.agents/README.md) for the curated skill library index, including the wiki/brain core, opt-in project SDD workflows, and optional specialist skills.
 
 ## Agent prompts
 

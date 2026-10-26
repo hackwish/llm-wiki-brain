@@ -22,6 +22,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 TEMPLATE_SCHEMA="${ROOT_DIR}/templates/schema/AGENTS.md.template"
 PRESETS_DIR="${ROOT_DIR}/templates/presets"
+PORTFOLIO_TEMPLATE="${ROOT_DIR}/templates/portfolio/project.md.template"
 
 usage() {
   sed -n '2,14p' "$0"
@@ -288,6 +289,21 @@ kit_sb_ops = {
     "company-brain": ""
 }
 
+portfolio_mode_text = """## Portfolio publication
+
+This knowledge base is private by default. Keep project records in `projects/` and publish a case study only when its frontmatter explicitly has all three values:
+
+```yaml
+portfolio: true
+visibility: public
+status: published
+```
+
+The exporter reads only top-level Markdown files in `projects/` and writes one static `index.html`; it does not read `raw/`, `wiki/`, or other PARA folders. Review the complete project body, links, and evidence for confidentiality and publication rights before enabling these values. Re-export after changing visibility so the public page is refreshed."""
+
+if preset != "portfolio":
+    portfolio_mode_text = ""
+
 k = kit if kit in kit_intro else "blended"
 
 text = text.replace("{{TITLE}}", title)
@@ -303,6 +319,7 @@ text = text.replace("{{KIT_LAYERS}}", kit_layers[k])
 text = text.replace("{{KIT_STRUCTURE}}", kit_structure[k])
 text = text.replace("{{KIT_EXTRA_MODE}}", kit_extra_mode[k])
 text = text.replace("{{KIT_SB_OPS}}", kit_sb_ops[k])
+text = text.replace("{{KIT_PORTFOLIO_MODE}}", portfolio_mode_text)
 
 open(out, "w", encoding="utf-8").write(text)
 PY
@@ -453,6 +470,32 @@ Move completed or paused projects and superseded material here. Keep the digital
 workspace clean so you can start over.
 
 _See [wiki/index.md](wiki/index.md) for the knowledge bundle._
+EOF
+fi
+
+# ---- Portfolio preset ----
+if [[ "$WIKI_PRESET" == "portfolio" ]]; then
+  [[ -f "$PORTFOLIO_TEMPLATE" ]] || die "portfolio project template not found: $PORTFOLIO_TEMPLATE"
+  cp "$PORTFOLIO_TEMPLATE" "$OUTPUT/projects/PROJECT-TEMPLATE.md"
+  cat > "$OUTPUT/projects/README.md" <<'EOF'
+# projects/
+
+Document each project as a Markdown case study, starting from `PROJECT-TEMPLATE.md`.
+Keep entries private by default. To include a case study in the static portfolio,
+set all three frontmatter fields to `portfolio: true`, `visibility: public`, and
+`status: published`, then review the entire body and its evidence for confidential
+or unauthorized material.
+
+From the toolkit repository, export the selected case studies with:
+
+```bash
+python3 scripts/portfolio-export.py --root /path/to/your-portfolio --output public
+```
+
+The exporter reads only top-level Markdown files in this folder and writes
+`public/index.html`. It does not publish `raw/`, `wiki/`, or other PARA folders.
+Re-export after changing publication status; the single generated page is replaced
+so previously published entries are not left behind.
 EOF
 fi
 
